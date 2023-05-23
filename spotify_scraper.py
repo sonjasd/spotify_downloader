@@ -6,6 +6,11 @@ import spotipy
 from dotenv import load_dotenv
 from spotipy.oauth2 import SpotifyClientCredentials
 
+if os.path.exists('.env') == False:
+    with open('.env', 'w') as f:
+        f.write('CLIENT_ID=\nCLIENT_SECRET=')
+        f.close()
+
 load_dotenv()
 
 CLIENT_ID = os.getenv("CLIENT_ID", "")
