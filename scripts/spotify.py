@@ -14,7 +14,6 @@ load_dotenv()
 
 CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
-OUTPUT_FILE_NAME = "track_info.csv"
 
 class spotify:
     def __init__(self):
