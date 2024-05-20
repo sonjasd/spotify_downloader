@@ -1,4 +1,4 @@
-import csv
+import json
 import os
 import re
 
@@ -51,10 +51,13 @@ class spotify:
 
         for track in tracks:
             name = track["name"]
-            primaryartist = ["artists"]
+            artists = track["artists"]
+            artist = artists[0]['name']
 
-            trackslist.append(str(track["name"]))
-            artistslist.append(str(track["artists"]))
+            #list inside list inside list or something, mcgyver fix for using spotify api
+
+            trackslist.append(str(name))
+            artistslist.append(str(artist))
 
         return trackslist, artistslist
 
