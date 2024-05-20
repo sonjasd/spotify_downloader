@@ -3,7 +3,6 @@ import re
 from spotify_scraper import spotify_scraper
 from youtube_search import YoutubeSearch
 from youtube_downloader import youtube_downloader
-from metadata_merger import metadata_merger
 from pandas import *
 
 spotify = spotify_scraper()
@@ -85,16 +84,5 @@ for count in range(len(tracks)):
     current = song(artist=current_artist, primaryartist=current_primaryartist, album=current_album, song = current_song, url=current_yturl)
 
     current.download()
-
-    metadata = metadata_merger()
-
-    metadata.merge(
-        url=current_url,
-        track=current_song,
-        artist=current_artist,
-        primaryartist=current_primaryartist,
-        album=current_album,
-        year=current_year
-        )
     
 os.remove('track_info.csv')
