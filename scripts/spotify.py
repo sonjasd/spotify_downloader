@@ -43,20 +43,27 @@ class spotify:
             playlist_uri_list.append(playlist_uri)
             type = "album"
         elif match := re.match(r"https://open.spotify.com/artist/(.*)\?", PLAYLIST_LINK):
-            playlist_uri = match.groups()[0]
-
+            artist_id = match.groups()[0]
             type = "album"
+            albums = session.artist_albums(artist_id)["items"]
+
+            counter = 0
+
+            for album in albums:
+                playlist_uri_list.append(albums[counter]["id"])
+                counter += 1
+
         else:
             raise ValueError("Invalid url...")
+        
+        trackslist = []
+        artistslist = []
 
         for playlist_uri in playlist_uri_list:
             if type == "playlist":
                 tracks = session.playlist_tracks(playlist_uri)["items"]
             elif type == "album":
                 tracks = session.album_tracks(playlist_uri)["items"]
-
-            trackslist = []
-            artistslist = []
 
             for track in tracks:
                 name = track["name"]
