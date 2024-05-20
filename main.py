@@ -1,8 +1,8 @@
 import os
 import re
-from scripts.spotify_scraper import spotify_scraper
+from scripts.spotify import spotify_scraper
 from youtube_search import YoutubeSearch
-from scripts.youtube_downloader import youtube_downloader
+from scripts.youtube import youtube_downloader
 from pandas import *
 
 spotify = spotify_scraper()
