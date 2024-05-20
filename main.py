@@ -7,7 +7,9 @@ from pandas import *
 
 spotify = spotify()
 
-spotify.fetch()
+trackslist, artistslist = spotify.fetch()
+for track in trackslist:
+    print(track)
 
 track_info = read_csv("track_info.csv")
  

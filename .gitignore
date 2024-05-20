@@ -1,3 +1,4 @@
 .env
 scripts/__pycache__/youtube.cpython-311.pyc
 scripts/__pycache__/spotify.cpython-311.pyc
+.cache

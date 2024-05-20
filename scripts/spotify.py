@@ -34,30 +34,32 @@ class spotify:
 
         if match := re.match(r"https://open.spotify.com/playlist/(.*)\?", PLAYLIST_LINK):
             playlist_uri = match.groups()[0]
+            type = "playlist"
+        elif match := re.match(r"https://open.spotify.com/album/(.*)\?", PLAYLIST_LINK):
+            playlist_uri = match.groups()[0]
+            type = "album"
         else:
-            raise ValueError("Expected format: https://open.spotify.com/playlist/...")
+            raise ValueError("Expected format: https://open.spotify.com/playlist/ or https://open.spotify.com/album/...")
 
-        tracks = session.playlist_tracks(playlist_uri)["items"]
+        if type == "playlist":
+            tracks = session.playlist_tracks(playlist_uri)["items"]
+        elif type == "album":
+            tracks = session.album_tracks(playlist_uri)["items"]
 
-        with open(OUTPUT_FILE_NAME, "w", encoding="utf-8") as file:
-            writer = csv.writer(file)
-    
-            writer.writerow(["primaryartist", "artists", "track", "album", "year", "image_url"])
+        trackslist = []
+        artistslist = []
 
-            prompt = 'Scraping playlists tracks and their info...'
+        for track in tracks:
+            name = track["name"]
+            primaryartist = ["artists"]
 
-            for track in tracks:
-                print(prompt)
-                name = track["track"]["name"]
-                primaryartist = track["track"]["artists"][0]["name"]
-                artists = ", ".join(
-                    [artist["name"] for artist in track["track"]["artists"]]
-                )
-                album = track["track"]["album"]["name"]
-                year = track["track"]["album"]["release_date"]
-                year = year[:4]
-                image_url = track["track"]["album"]["images"][0]["url"]
+            trackslist.append(str(track["name"]))
+            artistslist.append(str(track["artists"]))
 
-                prompt += '.'
-        
-                writer.writerow([primaryartist, artists, name, album, year, image_url])
+        return trackslist, artistslist
+
+
+
+
+
+                
