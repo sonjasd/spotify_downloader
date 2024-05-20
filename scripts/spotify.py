@@ -17,11 +17,11 @@ CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
 OUTPUT_FILE_NAME = "track_info.csv"
 
-class spotify_scraper:
+class spotify:
     def __init__(self):
         return
     
-    def scrape(self):
+    def fetch(self):
         
         PLAYLIST_LINK = input("Playlist url: ")
         print("\n")

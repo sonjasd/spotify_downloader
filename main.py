@@ -1,13 +1,13 @@
 import os
 import re
-from scripts.spotify import spotify_scraper
+from scripts.spotify import spotify
 from youtube_search import YoutubeSearch
 from scripts.youtube import youtube_downloader
 from pandas import *
 
-spotify = spotify_scraper()
+spotify = spotify()
 
-spotify.scrape()
+spotify.fetch()
 
 track_info = read_csv("track_info.csv")
  
