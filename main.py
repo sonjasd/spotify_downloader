@@ -1,9 +1,9 @@
-import os
 import re
 from scripts.spotify import spotify
 from youtube_search import YoutubeSearch
 from scripts.youtube import youtube_downloader
 from pandas import *
+import os
 
 spotify = spotify()
 
@@ -57,7 +57,11 @@ class musicdl:
         
         if not os.path.exists(f'./songs/{self.artist}'):
             os.makedirs(f'./songs/{self.artist}')
-        youtube_downloader.download(path=f'./songs/{self.artist}/{self.artist} - {self.song}', url=self.url)
+        songpath = (f'./songs/{self.artist}/{self.artist} - {self.song}')
+        if not os.path.exists(songpath):
+            youtube_downloader.download(path=songpath, url=self.url)
+        else:
+            print(self.song + " already exists, skipping")
 
 for count in range(len(trackslist)):
 
