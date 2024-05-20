@@ -23,7 +23,7 @@ class spotify:
     
     def fetch(self):
         
-        PLAYLIST_LINK = input("Playlist url: ")
+        PLAYLIST_LINK = input("Playlist/album/artist url: ")
         print("\n")
 
         client_credentials_manager = SpotifyClientCredentials(
@@ -32,32 +32,41 @@ class spotify:
 
         session = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
+        playlist_uri_list = []
+
         if match := re.match(r"https://open.spotify.com/playlist/(.*)\?", PLAYLIST_LINK):
             playlist_uri = match.groups()[0]
+            playlist_uri_list.append(playlist_uri)
             type = "playlist"
         elif match := re.match(r"https://open.spotify.com/album/(.*)\?", PLAYLIST_LINK):
             playlist_uri = match.groups()[0]
+            playlist_uri_list.append(playlist_uri)
+            type = "album"
+        elif match := re.match(r"https://open.spotify.com/artist/(.*)\?", PLAYLIST_LINK):
+            playlist_uri = match.groups()[0]
+
             type = "album"
         else:
-            raise ValueError("Expected format: https://open.spotify.com/playlist/ or https://open.spotify.com/album/...")
+            raise ValueError("Invalid url...")
 
-        if type == "playlist":
-            tracks = session.playlist_tracks(playlist_uri)["items"]
-        elif type == "album":
-            tracks = session.album_tracks(playlist_uri)["items"]
+        for playlist_uri in playlist_uri_list:
+            if type == "playlist":
+                tracks = session.playlist_tracks(playlist_uri)["items"]
+            elif type == "album":
+                tracks = session.album_tracks(playlist_uri)["items"]
 
-        trackslist = []
-        artistslist = []
+            trackslist = []
+            artistslist = []
 
-        for track in tracks:
-            name = track["name"]
-            artists = track["artists"]
-            artist = artists[0]['name']
+            for track in tracks:
+                name = track["name"]
+                artists = track["artists"]
+                artist = artists[0]['name']
 
-            #list inside list inside list or something, mcgyver fix for using spotify api
+                #list inside list inside list or something, mcgyver fix for using spotify api
 
-            trackslist.append(str(name))
-            artistslist.append(str(artist))
+                trackslist.append(str(name))
+                artistslist.append(str(artist))
 
         return trackslist, artistslist
 
