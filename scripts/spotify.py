@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 
 import spotipy
 from dotenv import load_dotenv
@@ -9,6 +10,8 @@ if os.path.exists('.env') == False:
     with open('.env', 'w') as f:
         f.write('CLIENT_ID=\nCLIENT_SECRET=')
         f.close()
+    print("\n Please enter spotify api credentials into .env and start again")
+    sys.exit()
 
 load_dotenv()
 
@@ -21,7 +24,7 @@ class spotify:
     
     def fetch(self):
         
-        PLAYLIST_LINK = input("Playlist/album/artist url: ")
+        PLAYLIST_LINK = input("\nPlaylist/album/artist url: ")
         print("\n")
 
         client_credentials_manager = SpotifyClientCredentials(
