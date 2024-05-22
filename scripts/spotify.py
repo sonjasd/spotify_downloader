@@ -1,6 +1,6 @@
-import json
 import os
 import re
+import sys
 
 import spotipy
 from dotenv import load_dotenv
@@ -10,12 +10,17 @@ if os.path.exists('.env') == False:
     with open('.env', 'w') as f:
         f.write('CLIENT_ID=\nCLIENT_SECRET=')
         f.close()
+    print("\n Please enter spotify api credentials into .env and start again")
+    sys.exit()
 
 load_dotenv()
 
 CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
-OUTPUT_FILE_NAME = "track_info.csv"
+
+if CLIENT_ID == "":
+    print("\n Please enter spotify api credentials into .env and start again")
+    sys.exit()
 
 class spotify:
     def __init__(self):
@@ -23,7 +28,7 @@ class spotify:
     
     def fetch(self):
         
-        PLAYLIST_LINK = input("Playlist/album/artist url: ")
+        PLAYLIST_LINK = input("\nPlaylist/album/artist url: ")
         print("\n")
 
         client_credentials_manager = SpotifyClientCredentials(
@@ -61,19 +66,30 @@ class spotify:
 
         for playlist_uri in playlist_uri_list:
             if type == "playlist":
-                tracks = session.playlist_tracks(playlist_uri)["items"]
+                x = session.playlist_tracks(playlist_uri)["items"]
+                listlength = len(x)
+                for track in range(0,listlength):
+                    y = x[track]['track']
+                    z = y['name']
+
+                    y2 = y["artists"]
+                    z2 = y2[0]['name']
+
+                    trackslist.append(str(z2))
+                    artistslist.append(str(z))
+
             elif type == "album":
                 tracks = session.album_tracks(playlist_uri)["items"]
 
-            for track in tracks:
-                name = track["name"]
-                artists = track["artists"]
-                artist = artists[0]['name']
+                for track in tracks:
+                    name = track["name"]
+                    artists = track["artists"]
+                    artist = artists[0]['name']
 
-                #list inside list inside list or something, mcgyver fix for using spotify api
+                    #list inside list inside list or something, mcgyver fix for using spotify api
 
-                trackslist.append(str(name))
-                artistslist.append(str(artist))
+                    trackslist.append(str(name))
+                    artistslist.append(str(artist))
 
         return trackslist, artistslist
 
