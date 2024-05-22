@@ -18,7 +18,7 @@ load_dotenv()
 CLIENT_ID = os.getenv("CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("CLIENT_SECRET", "")
 
-if CLIENT_ID == "":
+if (CLIENT_ID == "") or (CLIENT_SECRET == ""):
     print("\n Please enter spotify api credentials into .env and start again")
     sys.exit()
 
