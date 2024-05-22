@@ -62,19 +62,30 @@ class spotify:
 
         for playlist_uri in playlist_uri_list:
             if type == "playlist":
-                tracks = session.playlist_tracks(playlist_uri)["items"]
+                x = session.playlist_tracks(playlist_uri)["items"]
+                listlength = len(x)
+                for track in range(0,listlength):
+                    y = x[track]['track']
+                    z = y['name']
+
+                    y2 = y["artists"]
+                    z2 = y2[0]['name']
+
+                    trackslist.append(str(z2))
+                    artistslist.append(str(z))
+
             elif type == "album":
                 tracks = session.album_tracks(playlist_uri)["items"]
 
-            for track in tracks:
-                name = track["name"]
-                artists = track["artists"]
-                artist = artists[0]['name']
+                for track in tracks:
+                    name = track["name"]
+                    artists = track["artists"]
+                    artist = artists[0]['name']
 
-                #list inside list inside list or something, mcgyver fix for using spotify api
+                    #list inside list inside list or something, mcgyver fix for using spotify api
 
-                trackslist.append(str(name))
-                artistslist.append(str(artist))
+                    trackslist.append(str(name))
+                    artistslist.append(str(artist))
 
         return trackslist, artistslist
 

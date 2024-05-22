@@ -8,8 +8,6 @@ import os
 spotify = spotify()
 
 trackslist, artistslist = spotify.fetch()
-for track in trackslist:
-    print(track)
 
 print('\n')
 
