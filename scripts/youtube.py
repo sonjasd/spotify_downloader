@@ -6,5 +6,4 @@ class youtube_downloader:
     def download(path, url):
         path = f'{path}'
         with youtube_dl.YoutubeDL({'extract_audio': True, 'format': 'bestaudio', 'outtmpl': path, 'postprocessors':[{'key':'FFmpegExtractAudio', 'preferredcodec':'mp3', 'preferredquality':'192',}]}) as video:
-            info_dict = video.extract_info(url, download = True)
             video.download(url)
